@@ -132,8 +132,8 @@ function About() {
 
       <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-18">
         <Reveal from="left" className="flex flex-col gap-5">
-          <div className="tilt relative aspect-[4/5] overflow-hidden rounded-[20px] border border-line bg-raised">
-            <Image src={site.portrait} alt={`Portrait of ${site.name}`} fill sizes="(min-width: 1024px) 480px, 100vw" className="object-cover object-top" />
+          <div className="tilt relative aspect-[4/5] w-full max-w-80 overflow-hidden rounded-[20px] border border-line bg-raised lg:max-w-none">
+            <Image src={site.portrait} alt={`Portrait of ${site.name}`} fill sizes="(min-width: 1024px) 480px, 320px" className="object-cover object-top" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             {[["Based in", site.location], ["Focus", "Full-stack"], ["Studying", "BSc CS"]].map(([k, v]) => (

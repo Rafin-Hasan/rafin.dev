@@ -45,8 +45,8 @@ export default function AboutPage() {
             <Link href="/#contact" className="btn btn-secondary">Get in touch</Link>
           </div>
         </div>
-        <div className="card relative aspect-[4/5] overflow-hidden rounded-3xl">
-          <Image src={site.portrait} alt={`Portrait of ${site.name}`} fill priority sizes="(min-width: 1024px) 480px, 100vw" className="object-cover object-top" />
+        <div className="card relative aspect-[4/5] w-full max-w-80 overflow-hidden rounded-3xl lg:max-w-none">
+          <Image src={site.portrait} alt={`Portrait of ${site.name}`} fill priority sizes="(min-width: 1024px) 480px, 320px" className="object-cover object-top" />
         </div>
       </section>
 
