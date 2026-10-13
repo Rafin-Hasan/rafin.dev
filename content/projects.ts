@@ -12,6 +12,7 @@ export type Project = {
   tags: string[];
   featured?: boolean;
   image?: string; // e.g. "/projects/my-app.png" (16:10)
+  highlights?: string[]; // short badges shown on the home page bento card
   gallery?: string[]; // extra screenshots shown at the end of the case study
   liveUrl?: string;
   sourceUrl?: string;
@@ -32,35 +33,6 @@ export type CaseStudy = {
   results: { value: string; label: string }[];
 };
 
-const placeholderCaseStudy: CaseStudy = {
-  pitch: "[One-line pitch — e.g. a collaborative task board that keeps remote teams in sync in real time.]",
-  role: "[Solo full-stack developer]",
-  timeline: "[Mon YYYY — Mon YYYY]",
-  team: "[Just me / team of N]",
-  overview:
-    "[Two or three sentences: what the product is, who uses it, and why you built it. Keep it plain — a recruiter should get it in ten seconds.]",
-  problem: "[What was broken, slow or missing before. Who felt the pain and how.]",
-  approach: "[The key decisions: why this stack, how the data flows, what you optimised for.]",
-  architecture: [
-    { name: "Client", detail: "React · RSC" },
-    { name: "Next.js server", detail: "Route handlers · actions" },
-    { name: "Database", detail: "PostgreSQL · Prisma" },
-  ],
-  features: [1, 2, 3, 4].map(() => ({
-    title: "[Feature name]",
-    detail: "[What it does and why it matters to the user.]",
-  })),
-  challenges: [
-    { challenge: "[e.g. Keeping state in sync across tabs without hammering the database.]", solution: "[What you tried, what worked, and why.]" },
-    { challenge: "[Second challenge.]", solution: "[How you solved it.]" },
-  ],
-  results: [
-    { value: "[N]", label: "[Active users]" },
-    { value: "[N]", label: "[Lighthouse score]" },
-    { value: "[N]%", label: "[Faster than v1]" },
-  ],
-};
-
 export const projects: Project[] = [
   {
     slug: "tracepulse",
@@ -72,6 +44,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "React", "Vercel"],
     featured: true,
     image: "/projects/tracepulse.png",
+    highlights: ["State sync", "Waterfall timeline", "Dynamic pricing calculator"],
     liveUrl: "https://tracepulse-website.vercel.app/",
     sourceUrl: "https://github.com/Rafin-Hasan/tracepulse-website",
     caseStudy: {
@@ -117,6 +90,7 @@ export const projects: Project[] = [
       "Multi-page product site for a distributed edge database — with a live SQL playground, a Raft cluster you can break and heal, and a usage-based pricing estimator.",
     tags: ["React", "Vite", "Vercel"],
     image: "/projects/aetherdb.webp",
+    highlights: ["Raft consensus simulation", "SQL playground", "Latency benchmarks"],
     liveUrl: "https://aetherdb-site.vercel.app/",
     caseStudy: {
       pitch:
@@ -161,6 +135,7 @@ export const projects: Project[] = [
       "A task manager built like a physical desk: dial a combination lock to open your vault, then organise folders, timed works and countdown challenges that sync across devices.",
     tags: ["React", "Vite", "Web Audio API"],
     image: "/projects/task-console-vault.webp",
+    highlights: ["Dial-lock sign-in", "Web Audio feedback", "Cross-device sync"],
     gallery: ["/projects/task-console-workspace.webp", "/projects/task-console-tutorial.webp"],
     liveUrl: "https://tactile-task-consol.vercel.app/",
     caseStudy: {
@@ -198,46 +173,55 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "project-04",
-    name: "[Project 04]",
+    slug: "lemon-warles",
+    name: "Lemon Warles",
     kind: "Frontend",
-    year: "2025",
-    summary: "[Website / UI build — the client or purpose.]",
-    tags: ["Next.js", "Tailwind", "MDX"],
-    liveUrl: "#",
-    sourceUrl: "#",
-    caseStudy: placeholderCaseStudy,
-  },
-  {
-    slug: "project-05",
-    name: "[Project 05]",
-    kind: "Interactive",
-    year: "2025",
-    summary: "[Interactive experience — what users can do with it.]",
-    tags: ["React", "Three.js", "GSAP"],
-    liveUrl: "#",
-    sourceUrl: "#",
-    caseStudy: placeholderCaseStudy,
-  },
-  {
-    slug: "project-06",
-    name: "[Project 06]",
-    kind: "Frontend",
-    year: "2025",
-    summary: "[Website / UI build — the client or purpose.]",
-    tags: ["React", "TypeScript", "Vite"],
-    liveUrl: "#",
-    sourceUrl: "#",
-    caseStudy: placeholderCaseStudy,
+    year: "[YEAR]",
+    summary:
+      "Responsive landing page for a web-hosting company, built to convert: a clear hero, hosting plans, customer stories and a sign-up call to action.",
+    tags: ["React", "Vite", "Tailwind CSS"],
+    image: "/projects/lemonwarles.png",
+    highlights: ["Pricing plans", "Customer stories", "Scroll animations"],
+    liveUrl: "https://lemonwarles.vercel.app/",
+    caseStudy: {
+      pitch: "A conversion-focused landing page for LemonWares, a web-hosting brand, built as a responsive React single-page site.",
+      role: "[Frontend developer]",
+      timeline: "[Mon YYYY — Mon YYYY]",
+      team: "[Just me]",
+      overview:
+        "Lemon Warles is a marketing landing page for a web-hosting company. It leads with a simple promise — premium web hosting for your website — then walks visitors through the hosting types on offer, the plans, customer stories and a final prompt to create an account.",
+      problem:
+        "A hosting landing page has one job: get a visitor from the headline to choosing a plan. Every section has to earn its place and the page has to read well on a phone, where most first visits happen. [Add where the design came from — your own, a client brief, or a design you rebuilt for practice.]",
+      approach:
+        "The page is a single React app built with Vite and styled with Tailwind CSS utility classes, with sections revealing on scroll. Layout is mobile-first, with the hero image and plan cards reflowing for small screens. [Add your key decisions — component breakdown, how you matched the design, what you optimised.]",
+      architecture: [
+        { name: "Sections", detail: "Hero · plans · stories · CTA" },
+        { name: "React + Vite", detail: "Tailwind CSS · scroll reveals" },
+        { name: "Vercel", detail: "Static hosting · CDN" },
+      ],
+      features: [
+        { title: "Hero with twin calls to action", detail: "Headline, supporting line and two buttons — create an account or choose a plan — beside a framed product photo." },
+        { title: "Hosting plans", detail: "Shared, cloud, WordPress, email and private hosting laid out as packages with a clear button on each." },
+        { title: "Customer stories", detail: "Testimonials with names and roles to build trust before the final sign-up prompt." },
+        { title: "Responsive, animated sections", detail: "A mobile-first layout where each section animates into view as you scroll." },
+      ],
+      challenges: [
+        { challenge: "[e.g. Matching the design pixel-for-pixel across breakpoints.]", solution: "[How you handled spacing, type scale and the decorative shapes.]" },
+        { challenge: "[e.g. Keeping scroll animations smooth on low-end phones.]", solution: "[What you did.]" },
+      ],
+      results: [
+        { value: "[N]", label: "[Lighthouse performance]" },
+        { value: "[N]", label: "[Accessibility score]" },
+        { value: "[N]", label: "[Sections built]" },
+      ],
+    },
   },
 ];
 
-export const archive = [
-  { year: "[YEAR]", name: "[Hackathon project]", stack: "[Stack]", url: "#" },
-  { year: "[YEAR]", name: "[Course project]", stack: "[Stack]", url: "#" },
-  { year: "[YEAR]", name: "[CLI tool / script]", stack: "[Stack]", url: "#" },
-  { year: "[YEAR]", name: "[UI experiment]", stack: "[Stack]", url: "#" },
-  { year: "[YEAR]", name: "[First website]", stack: "HTML · CSS · JavaScript", url: "#" },
+// Smaller builds and experiments. Add a `url` to link one.
+export const labs: { name: string; detail: string; url?: string }[] = [
+  { name: "eFootball Tournament Manager", detail: "Full-stack brackets with real-time standings" },
+  { name: "Audio & motion micro-labs", detail: "Web Audio and animation micro-interactions" },
 ];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);

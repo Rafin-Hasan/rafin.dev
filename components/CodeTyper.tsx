@@ -7,10 +7,10 @@ type Line = [string, Kind][];
 
 const CODE: Line[] = [
   [["export const", "k"], [" rafin = {", "p"]],
-  [["  role: ", "p"], ['"Full-stack developer"', "s"], [",", "p"]],
-  [["  stack: [", "p"], ['"Next.js"', "s"], [", ", "p"], ['"TypeScript"', "s"], [",", "p"]],
-  [["          ", "p"], ['"Node.js"', "s"], [", ", "p"], ['"PostgreSQL"', "s"], ["],", "p"]],
-  [["  focus: ", "p"], ['"fast, accessible web apps"', "s"], [",", "p"]],
+  [["  role: ", "p"], ['"Frontend & full-stack dev"', "s"], [",", "p"]],
+  [["  stack: [", "p"], ['"React"', "s"], [", ", "p"], ['"Next.js"', "s"], [",", "p"]],
+  [["          ", "p"], ['"TypeScript"', "s"], [", ", "p"], ['"Vite"', "s"], ["],", "p"]],
+  [["  focus: ", "p"], ['"fast, tactile interfaces"', "s"], [",", "p"]],
   [["  studying: ", "p"], ['"BSc CS @ Roehampton"', "s"], [",", "p"]],
   [["  location: ", "p"], ['"London, UK"', "s"], [",", "p"]],
   [["  openToWork: ", "p"], ["true", "b"], [",", "p"]],

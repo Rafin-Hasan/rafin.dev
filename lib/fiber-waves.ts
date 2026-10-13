@@ -1,5 +1,6 @@
-// Mint + white fibre-optic ribbons drawn on a canvas. Horizontal at the top of the page;
-// scrolling turns them vertical over the first ~0.9 screen, scrolling back turns them back.
+// Mint + white fibre-optic ribbons drawn on a canvas, with pulses of light racing along them.
+// Horizontal at the top of the page; scrolling turns them vertical over the first ~0.9 screen,
+// and scrolling back up turns them horizontal again.
 
 type Ribbon = {
   y: number;
@@ -35,12 +36,14 @@ const RIBBONS: Ribbon[] = [
 ];
 
 const TAU = Math.PI * 2;
+const PULSES = 3; // light pulses per ribbon
+const PULSE_STEPS = 8; // segments in each pulse tail
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 const smoothstep = (t: number) => t * t * (3 - 2 * t);
 
 export function createFiberWaves(canvas: HTMLCanvasElement, glowCanvas: HTMLCanvasElement | null, initial: Partial<Options> = {}) {
   const ctx = canvas.getContext("2d");
-  if (!ctx) return () => {};
+  if (!ctx) return { onScroll() {}, destroy() {} };
   const gctx = glowCanvas?.getContext("2d") ?? null;
   const canvasFilter = !!gctx && typeof gctx.filter === "string";
   if (glowCanvas && !canvasFilter) glowCanvas.style.filter = "blur(36px)";
@@ -154,24 +157,48 @@ export function createFiberWaves(canvas: HTMLCanvasElement, glowCanvas: HTMLCanv
       const twist = r.twist * freqScale;
       const t0 = time * r.speed * TAU + r.phase + travel * (ri % 2 ? -0.7 : 1);
 
+      // Height of the strand at angle `a` around the ribbon, at distance x along it.
+      const yAt = (x: number, a: number) => {
+        const t = (x - x0) / (x1 - x0);
+        const ph = t * freq * TAU + t0;
+        let cy = baseY + amp * Math.sin(ph) + amp * 0.32 * Math.sin(ph * 2.3 + time * 0.35 + ri) + x * tilt;
+        if (bendAmp) {
+          const dx = x - plx;
+          cy += bendDir * bendAmp * Math.exp(-(dx * dx) / (2 * bendSigma * bendSigma));
+        }
+        return cy + band * Math.cos(a + t * twist * twistBoost * TAU + time * 0.22 + r.phase);
+      };
+
       for (let k = 0; k < strands; k++) {
         const a = (strands === 1 ? 0.5 : k / (strands - 1)) * Math.PI;
         c.globalAlpha = clamp((0.18 + 0.82 * Math.sin(a)) * r.alpha * opts.intensity * 0.55, 0, 1);
         c.beginPath();
         for (let i = 0; i <= points; i++) {
           const x = x0 + i * step;
-          const t = (x - x0) / (x1 - x0);
-          const ph = t * freq * TAU + t0;
-          let cy = baseY + amp * Math.sin(ph) + amp * 0.32 * Math.sin(ph * 2.3 + time * 0.35 + ri) + x * tilt;
-          if (bendAmp) {
-            const dx = x - plx;
-            cy += bendDir * bendAmp * Math.exp(-(dx * dx) / (2 * bendSigma * bendSigma));
-          }
-          const y = cy + band * Math.cos(a + t * twist * twistBoost * TAU + time * 0.22 + r.phase);
-          if (i === 0) c.moveTo(x, y);
-          else c.lineTo(x, y);
+          if (i === 0) c.moveTo(x, yAt(x, a));
+          else c.lineTo(x, yAt(x, a));
         }
         c.stroke();
+      }
+
+      // Pulses of light travel along the core strand, each with a tail that fades behind it.
+      if (motionQuery.matches) return;
+      const dir = r.speed < 0 ? -1 : 1;
+      const tail = L * 0.1;
+      c.strokeStyle = "#eafff6";
+      c.lineWidth = r.lineWidth + 0.9;
+      for (let p = 0; p < PULSES; p++) {
+        const u = (((time * 0.05 * dir + p / PULSES + ri * 0.19) % 1) + 1) % 1;
+        const head = x0 + u * (x1 - x0);
+        for (let n = 0; n < PULSE_STEPS; n++) {
+          const xa = head - dir * tail * (1 - n / PULSE_STEPS);
+          const xb = head - dir * tail * (1 - (n + 1) / PULSE_STEPS);
+          c.globalAlpha = clamp(((n + 1) / PULSE_STEPS) ** 2 * r.alpha * opts.intensity * 0.9, 0, 1);
+          c.beginPath();
+          c.moveTo(xa, yAt(xa, Math.PI / 2));
+          c.lineTo(xb, yAt(xb, Math.PI / 2));
+          c.stroke();
+        }
       }
     });
 
@@ -237,7 +264,6 @@ export function createFiberWaves(canvas: HTMLCanvasElement, glowCanvas: HTMLCanv
   const ro = new ResizeObserver(onResize);
   ro.observe(host);
   window.addEventListener("resize", onResize, { passive: true });
-  window.addEventListener("scroll", readScroll, { passive: true });
   window.addEventListener("pointermove", onPointer, { passive: true });
   document.addEventListener("pointerleave", onPointerLeave);
   document.addEventListener("visibilitychange", onVisibility);
@@ -249,14 +275,17 @@ export function createFiberWaves(canvas: HTMLCanvasElement, glowCanvas: HTMLCanv
   rot = rotTarget;
   start();
 
-  return function destroy() {
-    cancelAnimationFrame(raf);
-    ro.disconnect();
-    window.removeEventListener("resize", onResize);
-    window.removeEventListener("scroll", readScroll);
-    window.removeEventListener("pointermove", onPointer);
-    document.removeEventListener("pointerleave", onPointerLeave);
-    document.removeEventListener("visibilitychange", onVisibility);
-    motionQuery.removeEventListener("change", start);
+  // The caller reports scroll changes (see FiberBackground), so no scroll listener lives here.
+  return {
+    onScroll: readScroll,
+    destroy() {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointer);
+      document.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+      motionQuery.removeEventListener("change", start);
+    },
   };
 }

@@ -47,7 +47,7 @@
 /* ── Layout primitives ─────────────────────────────────────────── */
 @utility container-page {
   width: 100%;
-  max-width: 1248px;
+  max-width: 1328px;
   margin-inline: auto;
   padding-inline: 24px;
 }

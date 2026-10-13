@@ -35,8 +35,8 @@ export default function AboutPage() {
               [How you started — the first thing you built, or the moment web development clicked.]
             </p>
             <p>
-              Today I work as a full-stack developer building fast, thoughtful web apps with Next.js, TypeScript and
-              Tailwind, taking features from the database through to the final interaction.
+              Today I work as a frontend and full-stack developer building fast, tactile web interfaces with React,
+              Next.js and TypeScript, taking features from the data layer through to the final interaction.
             </p>
             <p>[What you&apos;re after next — the team, problems or role you&apos;re looking for.]</p>
           </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
             <div key={s.group} className="card card-hover flex flex-col gap-4 p-7">
               <span className="text-lg font-semibold">{s.group}</span>
               <div className="flex flex-wrap gap-1.5">
-                {s.items.map((item) => <span key={item} className="chip chip-hover">{item}</span>)}
+                {s.items.map((item) => <span key={item.name} className="chip chip-hover">{item.name}</span>)}
               </div>
             </div>
           ))}

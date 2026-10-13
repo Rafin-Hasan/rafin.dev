@@ -7,9 +7,13 @@ export function CopyButton({ value, label, className }: { value: string; label: 
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(value);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // Clipboard blocked: nothing useful to do, so leave the button as it is.
+    }
   };
 
   return (
