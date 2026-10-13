@@ -12,6 +12,7 @@ export type Project = {
   tags: string[];
   featured?: boolean;
   image?: string; // e.g. "/projects/my-app.png" (16:10)
+  gallery?: string[]; // extra screenshots shown at the end of the case study
   liveUrl?: string;
   sourceUrl?: string;
   caseStudy?: CaseStudy;
@@ -152,15 +153,49 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "project-03",
-    name: "[Project 03]",
+    slug: "tactile-task-console",
+    name: "Tactile Task Console",
     kind: "Full-stack",
     year: "2026",
-    summary: "[Full-stack app — what it does and who it is for.]",
-    tags: ["Next.js", "MongoDB", "Stripe"],
-    liveUrl: "#",
-    sourceUrl: "#",
-    caseStudy: placeholderCaseStudy,
+    summary:
+      "A task manager built like a physical desk: dial a combination lock to open your vault, then organise folders, timed works and countdown challenges that sync across devices.",
+    tags: ["React", "Vite", "Web Audio API"],
+    image: "/projects/task-console-vault.webp",
+    gallery: ["/projects/task-console-workspace.webp", "/projects/task-console-tutorial.webp"],
+    liveUrl: "https://tactile-task-consol.vercel.app/",
+    caseStudy: {
+      pitch:
+        "A to-do app that feels like an object, not a form — a safe door to sign in, a wooden desk for your work, and a glass dome for the one thing you're focusing on.",
+      role: "[Solo designer & developer]",
+      timeline: "[Mon YYYY — Mon YYYY]",
+      team: "[Just me]",
+      overview:
+        "Tactile Task Console is a personal task manager with a skeuomorphic interface. There are no usernames: a vault code dialled on a combination lock is the account. Inside, an empty desk is filled from a single Add section with folders, temporary works and challenge works, each of which can be bookmarked, prioritised, marked as working and completed.",
+      problem:
+        "Most task apps look and behave the same: a list, a checkbox, a login form. I wanted to see whether a productivity tool could be memorable and enjoyable to touch without becoming harder to use — and whether sign-in could be reduced to a single code instead of an email and password.",
+      approach:
+        "Every screen is modelled on a physical object: brushed-metal safe, rotating dial and handle, wood-framed desk, analogue chronometer. Timing is part of the task model itself — temporary works run a stopwatch, challenge works race a countdown. A built-in eight-step tutorial explains each part. [Add your key technical decisions — how the vault code maps to stored data, the sync approach, how the dial interaction is built.]",
+      architecture: [
+        { name: "React client", detail: "Vite · dial, desk, timers" },
+        { name: "API", detail: "[Vault + sync endpoints]" },
+        { name: "Storage", detail: "[Database / store]" },
+      ],
+      features: [
+        { title: "Combination-lock sign-in", detail: "Drag or scroll the dial and press its centre to set each digit — or just type — then turn the handle. The code is the account; an extra password is optional." },
+        { title: "Three kinds of work", detail: "Folders with subfolders for subjects and projects, temporary works with a stopwatch, and challenge works that race a countdown." },
+        { title: "Focus Crucible", detail: "Drop a single work under a glass dome to focus on it, alongside a live chronometer showing what is under way and done." },
+        { title: "Sync, sound and tutorial", detail: "Work is saved and synced with a visible status, interface sounds can be toggled, and an eight-part tutorial covers every feature." },
+      ],
+      challenges: [
+        { challenge: "[e.g. Making a rotating dial that works with mouse drag, scroll wheel, touch and keyboard.]", solution: "[How you handled the angle maths and input methods.]" },
+        { challenge: "[e.g. Account security when the only credential is a short numeric code.]", solution: "[What you did — code length, optional password, rate limiting.]" },
+      ],
+      results: [
+        { value: "[N]", label: "[Lighthouse performance]" },
+        { value: "[N]", label: "[Accessibility score]" },
+        { value: "8", label: "Tutorial sections" },
+      ],
+    },
   },
   {
     slug: "project-04",

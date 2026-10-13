@@ -169,9 +169,15 @@ export default async function CaseStudyPage({ params }: Props) {
       </section>
 
       <section className="container-page grid gap-6 pt-24 md:grid-cols-2">
-        {["[Detail screenshot]", "[Mobile screenshot]"].map((label) => (
-          <div key={label} className="card placeholder-img flex h-[420px] items-center justify-center font-mono text-xs text-subtle">{label}</div>
-        ))}
+        {project.gallery
+          ? project.gallery.map((src) => (
+              <div key={src} className="card relative aspect-[16/10] overflow-hidden">
+                <Image src={src} alt={`${project.name} screenshot`} fill sizes="(min-width: 768px) 588px, 100vw" className="object-cover object-top" />
+              </div>
+            ))
+          : ["[Detail screenshot]", "[Mobile screenshot]"].map((label) => (
+              <div key={label} className="card placeholder-img flex h-[420px] items-center justify-center font-mono text-xs text-subtle">{label}</div>
+            ))}
       </section>
 
       <nav aria-label="More projects" className="container-page my-24 grid gap-6 md:grid-cols-2">
