@@ -7,6 +7,7 @@ type Effect = "up" | "left" | "right" | "zoom";
 
 type Props = {
   children: ReactNode;
+  id?: string;
   className?: string;
   from?: Effect;
   delay?: number;
@@ -28,13 +29,14 @@ const hidden = (effect: Effect, side: 1 | -1) =>
  * Animates content in whenever it enters the viewport and back out when it leaves,
  * so it replays scrolling down and scrolling up.
  */
-export function Reveal({ children, className, from = "up", delay = 0 }: Props) {
+export function Reveal({ children, id, className, from = "up", delay = 0 }: Props) {
   const reduce = useReducedMotion();
   const [shown, setShown] = useState(false);
   const [side, setSide] = useState<1 | -1>(1);
 
   return (
     <motion.div
+      id={id}
       className={className}
       initial={false}
       animate={shown ? { opacity: 1, x: 0, y: 0, scale: 1 } : reduce ? { opacity: 0 } : hidden(from, side)}

@@ -4,13 +4,13 @@ import { Fragment } from "react";
 import { ContactConsole } from "@/components/ContactConsole";
 import { ContactForm } from "@/components/ContactForm";
 import { ArrowRight, Download, GitHub } from "@/components/Icons";
+import { HeroReel } from "@/components/HeroReel";
 import { ProjectBento } from "@/components/ProjectBento";
 import { Reveal } from "@/components/Reveal";
 import { RoleRotator } from "@/components/RoleRotator";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Spotlight } from "@/components/Spotlight";
 import { TechArsenal } from "@/components/TechArsenal";
-import { TerminalWindow } from "@/components/TerminalWindow";
 import { projects } from "@/content/projects";
 import { metrics, now, site, story, tools } from "@/content/site";
 
@@ -33,7 +33,7 @@ const ACCENT = "tactile";
 
 function Hero() {
   return (
-    <Spotlight className="container-page grid items-center gap-12 pt-14 pb-16 lg:grid-cols-[7fr_5fr] lg:gap-16 lg:pt-20 lg:pb-20">
+    <Spotlight className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-12 pt-14 pb-16 lg:grid-cols-[7fr_5fr] lg:gap-16 lg:pt-20 lg:pb-20">
       <div className="relative flex flex-col gap-6">
         {site.available && (
           <div className="animate-rise inline-flex min-h-8 items-center gap-2.5 self-start rounded-full border border-signal-line bg-signal-soft px-3.5 py-1.5 text-[13px] [animation-delay:.1s]">
@@ -84,9 +84,9 @@ function Hero() {
       </div>
 
       <div className="animate-slide-in relative">
-        <div className="animate-float">
-          <div className="glow-border tilt">
-            <TerminalWindow />
+        <div className="animate-float hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]">
+          <div className="glow-border">
+            <HeroReel />
           </div>
         </div>
       </div>

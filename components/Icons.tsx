@@ -33,6 +33,15 @@ export const ArrowUp = (p: IconProps) => (
 export const ChevronLeft = (p: IconProps) => (
   <Icon strokeWidth={2} {...p}><path d="m15 18-6-6 6-6" /></Icon>
 );
+export const ChevronRight = (p: IconProps) => (
+  <Icon strokeWidth={2} {...p}><path d="m9 18 6-6-6-6" /></Icon>
+);
+export const Play = (p: IconProps) => (
+  <Icon {...p}><path d="M7 4.5v15l12-7.5z" /></Icon>
+);
+export const Pause = (p: IconProps) => (
+  <Icon {...p}><path d="M8 5v14" /><path d="M16 5v14" /></Icon>
+);
 export const Download = (p: IconProps) => (
   <Icon {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /><path d="M12 15V3" /></Icon>
 );

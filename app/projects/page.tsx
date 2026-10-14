@@ -22,7 +22,7 @@ export default function ProjectsPage() {
         <ProjectExplorer projects={projects} />
       </section>
 
-      <Reveal className="container-page flex flex-col gap-6 pt-28">
+      <Reveal id="lab" className="container-page flex scroll-mt-12 flex-col gap-6 pt-28">
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
           <div className="flex flex-col gap-2.5">
             <span className="eyebrow text-subtle">Lab</span>
